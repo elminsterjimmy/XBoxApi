@@ -8,6 +8,7 @@ package com.elminster.retrieve.data.game;
  */
 public enum Platform {
 
+  UNKNOWN("Unknown"),
   WIN("Win"),
   XBOX("XBox"),
   ARCADE("Arcade"),
@@ -22,5 +23,16 @@ public enum Platform {
   
   public String getName() {
     return name;
+  }
+  
+  public static Platform getPlatformFromString(String platforStr) {
+    switch (platforStr) {
+      case "Xbox":
+        return X360;
+      case "XboxOne":
+        return XONE;
+      default:
+        return UNKNOWN;
+    }
   }
 }

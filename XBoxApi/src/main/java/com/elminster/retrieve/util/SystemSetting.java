@@ -10,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.elminster.common.config.CommonConfiguration;
-import com.elminster.common.constants.Constants.StringConstants;
 import com.elminster.common.util.DateUtil;
 import com.elminster.common.util.FileUtil;
 
@@ -115,7 +114,7 @@ public class SystemSetting extends CommonConfiguration {
    * Update the last API called time.
    */
   public void updateLastApiCalledTime() {
-    properties.put(LAST_API_CALLED_TIME, System.currentTimeMillis());
+    setProperty(LAST_API_CALLED_TIME, System.currentTimeMillis());
   }
   
   /**

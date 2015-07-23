@@ -166,6 +166,10 @@ public class BaseRetriever<T> implements Callable<T> {
       logger.debug(sb.toString());
     }
     
+    int exitValue = pe.getExitValue();
+    if (logger.isDebugEnabled()) {
+      logger.debug("login process returns " + exitValue);
+    }
     if (0 != pe.getExitValue()) {
       throw new LoginFailedException(sb.toString());
     }

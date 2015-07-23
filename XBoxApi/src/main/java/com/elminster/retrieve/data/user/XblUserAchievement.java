@@ -2,6 +2,7 @@ package com.elminster.retrieve.data.user;
 
 import java.util.Date;
 
+import com.elminster.common.util.ObjectUtil;
 import com.elminster.retrieve.data.game.XblAchievement;
 
 public class XblUserAchievement extends XblAchievement {
@@ -31,5 +32,12 @@ public class XblUserAchievement extends XblAchievement {
    */
   public void setEarnedDate(Date earnedDate) {
     this.earnedDate = earnedDate;
+  }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return ObjectUtil.buildToStringByReflect(this);
   }
 }

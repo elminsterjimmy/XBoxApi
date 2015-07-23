@@ -1,11 +1,12 @@
 package com.elminster.retrieve.data.user;
 
+import com.elminster.common.util.ObjectUtil;
 import com.elminster.retrieve.data.game.XblGame;
 
 public class XblUserGame extends XblGame {
 
   private short earnedPoint;
-  private byte earnedAchievement;
+  private byte earnedAchievementCount;
   private byte completion;
   /**
    * @return the earnedPoint
@@ -22,25 +23,33 @@ public class XblUserGame extends XblGame {
   /**
    * @return the earnedAchievement
    */
-  public byte getEarnedAchievement() {
-    return earnedAchievement;
+  public byte getEarnedAchievementCount() {
+    return earnedAchievementCount;
   }
   /**
    * @param earnedAchievement the earnedAchievement to set
    */
-  public void setEarnedAchievement(byte earnedAchievement) {
-    this.earnedAchievement = earnedAchievement;
+  public void setEarnedAchievementCount(byte earnedAchievement) {
+    this.earnedAchievementCount = earnedAchievement;
   }
   /**
    * @return the completion
    */
-  public byte getCompletion() {
+  public byte getCompletionByPercent() {
     return completion;
   }
   /**
    * @param completion the completion to set
    */
-  public void setCompletion(byte completion) {
+  public void setCompletionByPercent(byte completion) {
     this.completion = completion;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return ObjectUtil.buildToStringByReflect(this);
   }
 }

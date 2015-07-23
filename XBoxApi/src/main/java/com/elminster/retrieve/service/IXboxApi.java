@@ -14,9 +14,11 @@ public interface IXboxApi {
   
   public List<XblUserGame> getXblUserGameList(String xblUsername) throws Exception;
   
+  public List<XblUserAchievement> getXblUserAchievement(String xblUsername, String xblGameId) throws Exception;
+  
+  // depending on aggregation in background. Need to think what happened if the game id is not being retrieved before.
   public List<XblAchievement> getXblGameAchievements(String xblGameId) throws Exception;
   
   public XblGame getXblGameSummary(String xblGameId) throws Exception;
   
-  public List<XblUserAchievement> getXblUserAchievement(String xblUsername, String xblGameId) throws Exception;
 }

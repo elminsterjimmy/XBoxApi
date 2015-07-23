@@ -1,5 +1,7 @@
 package com.elminster.retrieve.data.game;
 
+import com.elminster.common.util.ObjectUtil;
+
 /**
  * The achievement.
  * 
@@ -10,7 +12,7 @@ public class XblAchievement {
 
   private String gameId;
   private String achievementId;
-  private String name;
+  private String title;
   private String description;
   private short point;
   private String imageUrl;
@@ -39,16 +41,16 @@ public class XblAchievement {
     this.achievementId = achievementId;
   }
   /**
-   * @return the name
+   * @return the title
    */
-  public String getName() {
-    return name;
+  public String getTitle() {
+    return title;
   }
   /**
-   * @param name the name to set
+   * @param title the title to set
    */
-  public void setName(String name) {
-    this.name = name;
+  public void setTitle(String title) {
+    this.title = title;
   }
   /**
    * @return the description
@@ -85,5 +87,12 @@ public class XblAchievement {
    */
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return ObjectUtil.buildToStringByReflect(this);
   }
 }

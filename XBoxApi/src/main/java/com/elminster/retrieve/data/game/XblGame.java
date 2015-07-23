@@ -1,5 +1,7 @@
 package com.elminster.retrieve.data.game;
 
+import com.elminster.common.util.ObjectUtil;
+
 /**
  * The game.
  * 
@@ -9,7 +11,7 @@ package com.elminster.retrieve.data.game;
 public class XblGame {
 
   private String gameId;
-  private String name;
+  private String title;
   private short totalPoint;
   private byte AchievementCount;
   private String imageUrl;
@@ -27,16 +29,16 @@ public class XblGame {
     this.gameId = gameId;
   }
   /**
-   * @return the name
+   * @return the title
    */
-  public String getName() {
-    return name;
+  public String getTitle() {
+    return title;
   }
   /**
-   * @param name the name to set
+   * @param title the title to set
    */
-  public void setName(String name) {
-    this.name = name;
+  public void setTitle(String title) {
+    this.title = title;
   }
   /**
    * @return the totalPoint
@@ -85,5 +87,13 @@ public class XblGame {
    */
   public void setPlatform(Platform platform) {
     this.platform = platform;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return ObjectUtil.buildToStringByReflect(this);
   }
 }

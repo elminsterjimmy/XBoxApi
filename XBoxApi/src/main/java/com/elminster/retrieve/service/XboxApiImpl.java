@@ -14,6 +14,7 @@ import com.elminster.retrieve.data.user.XblUserGame;
 import com.elminster.retrieve.data.user.XblUserProfile;
 import com.elminster.retrieve.exception.ServiceException;
 import com.elminster.retrieve.parser.IParser;
+import com.elminster.retrieve.parser.XblUserGameAchieveParser;
 import com.elminster.retrieve.parser.XblUserGameListParser;
 import com.elminster.retrieve.parser.XblUserProfileParser;
 import com.elminster.retrieve.runnable.BaseRetriever;
@@ -26,7 +27,7 @@ public class XboxApiImpl implements IXboxApi {
     IParser<XblUserProfile> userProfileParser = new XblUserProfileParser();
     String userProfileUrl = Configuration.INSTANCE.getStringProperty(PropertyKey.USER_PROFILE_URL);
     String url = MessageFormat.format(userProfileUrl, xblUsername);
-    BaseRetriever<XblUserProfile> retriever = new BaseRetriever<XblUserProfile>(url, userProfileParser);
+    BaseRetriever<XblUserProfile> retriever = new BaseRetriever<>(url, userProfileParser);
     try {
       XblUserProfile result = (XblUserProfile) executeRetriever(retriever);
       return result;
@@ -41,9 +42,24 @@ public class XboxApiImpl implements IXboxApi {
     XblUserGameListParser parser = new XblUserGameListParser();
     String userGameListUrl = Configuration.INSTANCE.getStringProperty(PropertyKey.USER_GAME_LIST_URL);
     String url = MessageFormat.format(userGameListUrl, xblUsername);
-    BaseRetriever<List<XblUserGame>> retriever = new BaseRetriever<List<XblUserGame>>(url, parser);
+    BaseRetriever<List<XblUserGame>> retriever = new BaseRetriever<>(url, parser);
     try {
       List<XblUserGame> result = (List<XblUserGame>) executeRetriever(retriever);
+      return result;
+    } catch (Exception e) {
+      throw new ServiceException("Failed to get user's game list for user: [" + xblUsername + "]. Caused by: " + e);
+    }
+  }
+  
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<XblUserAchievement> getXblUserAchievement(String xblUsername, String xblGameId) throws Exception {
+    XblUserGameAchieveParser parser = new XblUserGameAchieveParser();
+    String userGameAchieveUrl = Configuration.INSTANCE.getStringProperty(PropertyKey.USER_GAME_ACHIEVE_URL);
+    String url = MessageFormat.format(userGameAchieveUrl, xblGameId, xblUsername);
+    BaseRetriever<List<XblUserAchievement>> retriever = new BaseRetriever<>(url, parser);
+    try {
+      List<XblUserAchievement> result = (List<XblUserAchievement>) executeRetriever(retriever);
       return result;
     } catch (Exception e) {
       throw new ServiceException("Failed to get user's game list for user: [" + xblUsername + "]. Caused by: " + e);
@@ -52,7 +68,6 @@ public class XboxApiImpl implements IXboxApi {
 
   @Override
   public List<XblAchievement> getXblGameAchievements(String xblGameId) throws Exception {
-    // TODO Auto-generated method stub
     return null;
   }
 
@@ -62,12 +77,6 @@ public class XboxApiImpl implements IXboxApi {
     return null;
   }
 
-  @Override
-  public List<XblUserAchievement> getXblUserAchievement(String xblUsername, String xblGameId) throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
   private Object executeRetriever(Callable<?> retriever) throws Exception {
     Future<?> future = ThreadPool.getThreadPool().submit(retriever);
     return future.get();
