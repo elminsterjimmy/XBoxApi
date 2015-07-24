@@ -33,11 +33,9 @@ public class XboxApiTest {
   
   @Test
   public void testRetrieveUserGameAchieves() throws Exception {
-    String[] gameIds = new String[4];
-    gameIds[0] = "XboxOne/217831213";
-    gameIds[1] = "XboxOne/1090851408";
-    gameIds[2] = "Xbox/1480659447";
-    gameIds[3] = "Xbox/1313671226";
+    String[] gameIds = new String[2];
+    gameIds[0] = "XboxOne/1090851408";
+    gameIds[1] = "Xbox/1480659447";
     String xblUsername = "Stallion83";
     for (String gameId : gameIds) {
       System.out.println("============================================================");
