@@ -5,13 +5,27 @@ import java.util.Locale;
 
 import org.w3c.dom.Document;
 
+import com.elminster.common.parser.ParseException;
 import com.elminster.common.util.XMLUtil;
 import com.elminster.retrieve.constants.PropertyKey;
 import com.elminster.retrieve.data.user.XblUserProfile;
-import com.elminster.retrieve.exception.ParseException;
+import com.elminster.retrieve.parser.web.HttpContentParser;
+import com.elminster.retrieve.util.Configuration;
 
-public class XblUserProfileParser extends BaseParser<XblUserProfile> {
+/**
+ * The Xbox live user profile parser.
+ * 
+ * @author jgu
+ * @version 1.0
+ */
+public class XblUserProfileParser extends HttpContentParser<XblUserProfile> {
   
+  /** the configuration. */
+  private static final Configuration configuration = Configuration.INSTANCE;
+  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public XblUserProfile parseDoc(Document doc) throws ParseException {
     XblUserProfile profile = null;
@@ -33,7 +47,6 @@ public class XblUserProfileParser extends BaseParser<XblUserProfile> {
       // TODO
       throw new ParseException(e);
     }
-    
     return profile;
   }
 

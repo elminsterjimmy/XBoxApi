@@ -8,14 +8,28 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.elminster.common.constants.Constants.StringConstants;
+import com.elminster.common.parser.ParseException;
 import com.elminster.common.util.XMLUtil;
 import com.elminster.retrieve.constants.PropertyKey;
 import com.elminster.retrieve.data.game.Platform;
 import com.elminster.retrieve.data.user.XblUserGame;
-import com.elminster.retrieve.exception.ParseException;
+import com.elminster.retrieve.parser.web.HttpContentParser;
+import com.elminster.retrieve.util.Configuration;
 
-public class XblUserGameListParser extends BaseParser<List<XblUserGame>> {
+/**
+ * The Xbox live user's game list parser.
+ * 
+ * @author jgu
+ * @version 1.0
+ */
+public class XblUserGameListParser extends HttpContentParser<List<XblUserGame>> {
+  
+  /** the configuration. */
+  private static final Configuration configuration = Configuration.INSTANCE;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected List<XblUserGame> parseDoc(Document doc) throws ParseException {
     List<XblUserGame> gameCollections = null;
@@ -101,6 +115,11 @@ public class XblUserGameListParser extends BaseParser<List<XblUserGame>> {
     return gameCollections;
   }
 
+  /**
+   * Get the game id from game url.
+   * @param gameUrl the game url
+   * @return the game id
+   */
   private String getGameIdFromUrl(String gameUrl) {
     int secLastSlashIdx = gameUrl.substring(0, gameUrl.lastIndexOf(StringConstants.SLASH)).lastIndexOf(
         StringConstants.SLASH);

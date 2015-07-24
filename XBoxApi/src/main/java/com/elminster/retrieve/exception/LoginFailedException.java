@@ -1,5 +1,11 @@
 package com.elminster.retrieve.exception;
 
+/**
+ * The login failed exception.
+ * 
+ * @author jgu
+ * @version 1.0
+ */
 public class LoginFailedException extends Exception {
 
   /**

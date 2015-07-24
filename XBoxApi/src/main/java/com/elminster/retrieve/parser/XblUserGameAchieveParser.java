@@ -9,15 +9,29 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.elminster.common.constants.Constants.StringConstants;
+import com.elminster.common.parser.ParseException;
 import com.elminster.common.util.DateUtil;
 import com.elminster.common.util.StringUtil;
 import com.elminster.common.util.XMLUtil;
 import com.elminster.retrieve.constants.PropertyKey;
 import com.elminster.retrieve.data.user.XblUserAchievement;
-import com.elminster.retrieve.exception.ParseException;
+import com.elminster.retrieve.parser.web.HttpContentParser;
+import com.elminster.retrieve.util.Configuration;
 
-public class XblUserGameAchieveParser extends BaseParser<List<XblUserAchievement>> {
+/**
+ * The XBox live user's game achieve parser.
+ * 
+ * @author jgu
+ * @version 1.0
+ */
+public class XblUserGameAchieveParser extends HttpContentParser<List<XblUserAchievement>> {
+  
+  /** the configuration. */
+  private static final Configuration configuration = Configuration.INSTANCE;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected List<XblUserAchievement> parseDoc(Document doc) throws ParseException {
     List<XblUserAchievement> achieveList = null;

@@ -5,29 +5,22 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.concurrent.Callable;
 
 import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.elminster.common.constants.Constants.StringConstants;
 import com.elminster.common.process.ProcessExecutor;
+import com.elminster.common.retrieve.RetrieveException;
 import com.elminster.common.util.DateUtil;
 import com.elminster.common.util.FileUtil;
 import com.elminster.common.util.StringUtil;
-import com.elminster.retrieve.cookie.PermitAllCookiesSpec;
 import com.elminster.retrieve.exception.LoginFailedException;
-import com.elminster.retrieve.exception.ParseException;
-import com.elminster.retrieve.exception.RetrieveException;
-import com.elminster.retrieve.parser.IParser;
 import com.elminster.retrieve.util.SystemSetting;
+import com.elminster.retrieve.web.CookieInjectRetriever;
+import com.elminster.retrieve.web.data.Method;
 
 /**
  * The base retriever.
@@ -35,19 +28,13 @@ import com.elminster.retrieve.util.SystemSetting;
  * @author jgu
  * @version 1.0
  */
-public class BaseRetriever<T> implements Callable<T> {
+public class BaseRetriever extends CookieInjectRetriever {
 
   /** the logger. */
   private static final Log logger = LogFactory.getLog(BaseRetriever.class);
 
   /** the system setting. */
   private static SystemSetting systemSetting = SystemSetting.INSTANCE;
-
-  /** the url. */
-  private final String url;
-
-  /** the html parser for parsing the response. */
-  private final IParser<T> parser;
 
   /**
    * Constructor.
@@ -57,40 +44,8 @@ public class BaseRetriever<T> implements Callable<T> {
    * @param parser
    *          the parser
    */
-  public BaseRetriever(String url, IParser<T> parser) {
-    this.url = url;
-    this.parser = parser;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public T call() throws Exception {
-    try {
-      if (!checkCookieValid()) {
-        logger.debug("Cookies unavailable. Login into MS live.");
-        loginIntoLive();
-      }
-      HttpClient client = new HttpClient();
-      injectLoginCookies(client);
-      HttpMethod method = new GetMethod();
-      method.setURI(new URI(url, false));
-      client.executeMethod(method);
-      int status = method.getStatusCode();
-      if (200 != status) {
-        throw new RetrieveException(url, "Status fails. Status = " + status);
-      } else {
-        String response = method.getResponseBodyAsString();
-        return parser.parseResponse(response);
-      }
-    } catch (NullPointerException | IOException | URISyntaxException e) {
-      throw new RetrieveException(url, e);
-    } catch (ParseException e) {
-      throw e;
-    } catch (LoginFailedException e) {
-      throw e;
-    }
+  public BaseRetriever(String url) {
+    super(url, Method.GET_METHOD);
   }
 
   /**
@@ -109,26 +64,8 @@ public class BaseRetriever<T> implements Callable<T> {
       }
       return true;
     }
+    
     return false;
-  }
-
-  /**
-   * Inject the login cookies into the http client.
-   * 
-   * @param client
-   *          the http client
-   * @throws IOException
-   *           on error
-   */
-  private void injectLoginCookies(HttpClient client) throws IOException {
-    Cookie[] cookies = readCookies();
-    client.getState().addCookies(cookies);
-
-    CookiePolicy.registerCookieSpec("PermitAllCookiesSpec", PermitAllCookiesSpec.class);
-    client.getParams().setCookiePolicy("PermitAllCookiesSpec");
-
-    // update last login time.
-    systemSetting.updateLastApiCalledTime();
   }
 
   /**
@@ -183,7 +120,17 @@ public class BaseRetriever<T> implements Callable<T> {
    * @throws IOException
    *           on error
    */
-  private Cookie[] readCookies() throws IOException {
+  protected Cookie[] readCookies() throws IOException {
+    if (!checkCookieValid()) {
+      try {
+        loginIntoLive();
+      } catch (URISyntaxException | LoginFailedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+    systemSetting.updateLastApiCalledTime();
+    
     Cookie[] co = null;
     File cookieFile = new File("cookie/" + systemSetting.getMSLiveUsername() + ".txt");
     if (cookieFile.exists()) {
@@ -205,28 +152,10 @@ public class BaseRetriever<T> implements Callable<T> {
     return co;
   }
 
-  /**
-   * Create a new cookie with domain, name, value, path and expires.
-   * 
-   * @param domain
-   *          the domain
-   * @param name
-   *          the name
-   * @param value
-   *          the value
-   * @param path
-   *          the path
-   * @param expires
-   *          the expires
-   * @return a new cookie
-   */
-  private Cookie createCookie(String domain, String name, String value, String path, long expires) {
-    Cookie cookie = new Cookie();
-    cookie.setDomain(domain);
-    cookie.setName(name);
-    cookie.setValue(value);
-    cookie.setPath(path);
-    cookie.setExpiryDate(new Date(System.currentTimeMillis() + expires));
-    return cookie;
+  @Override
+  protected void configHttpMethod(HttpMethod httpMethod) throws RetrieveException {
+    // TODO Auto-generated method stub
+    
   }
+
 }

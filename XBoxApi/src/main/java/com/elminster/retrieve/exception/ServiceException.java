@@ -1,5 +1,10 @@
 package com.elminster.retrieve.exception;
 
+/**
+ * The service exception.
+ * @author jgu
+ *
+ */
 public class ServiceException extends Exception {
 
   /**

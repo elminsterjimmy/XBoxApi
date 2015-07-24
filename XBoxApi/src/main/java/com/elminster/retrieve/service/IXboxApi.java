@@ -7,18 +7,56 @@ import com.elminster.retrieve.data.game.XblGame;
 import com.elminster.retrieve.data.user.XblUserAchievement;
 import com.elminster.retrieve.data.user.XblUserGame;
 import com.elminster.retrieve.data.user.XblUserProfile;
+import com.elminster.retrieve.exception.ServiceException;
 
+/**
+ * The XBox API interface.
+ * 
+ * @author jgu
+ * @version 1.0
+ */
 public interface IXboxApi {
 
-  public XblUserProfile getXblUserProfile(String xblUsername) throws Exception;
+  /**
+   * Get the Xbox live user's profile.
+   * @param xblUsername the Xbox live username
+   * @return the Xbox live user's profile
+   * @throws Exception on error
+   */
+  public XblUserProfile getXblUserProfile(String xblUsername) throws ServiceException;
   
-  public List<XblUserGame> getXblUserGameList(String xblUsername) throws Exception;
+  /**
+   * Get the Xbox live user's game list.
+   * @param xblUsername the Xbox live username
+   * @return the Xbox live user's game list
+   * @throws Exception on error
+   */
+  public List<XblUserGame> getXblUserGameList(String xblUsername) throws ServiceException;
   
-  public List<XblUserAchievement> getXblUserAchievement(String xblUsername, String xblGameId) throws Exception;
+  /**
+   * Get the Xbox live user's game achievements.
+   * @param xblUsername the Xbox live username
+   * @param xblGameId the game id
+   * @return the Xbox live user's game achievements
+   * @throws Exception on error
+   */
+  public List<XblUserAchievement> getXblUserAchievement(String xblUsername, String xblGameId) throws ServiceException;
   
   // depending on aggregation in background. Need to think what happened if the game id is not being retrieved before.
-  public List<XblAchievement> getXblGameAchievements(String xblGameId) throws Exception;
+  /**
+   * Get the Xbox game's achievements.
+   * @param xblGameId the game id
+   * @return the Xbox game's achievements
+   * @throws Exception on error
+   */
+  public List<XblAchievement> getXblGameAchievements(String xblGameId) throws ServiceException;
   
-  public XblGame getXblGameSummary(String xblGameId) throws Exception;
+  /**
+   * Get the the Xbox game's summary.
+   * @param xblGameId the game id
+   * @return the Xbox game's summary
+   * @throws Exception on error
+   */
+  public XblGame getXblGameSummary(String xblGameId) throws ServiceException;
   
 }
