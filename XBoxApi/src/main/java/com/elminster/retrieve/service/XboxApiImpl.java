@@ -57,7 +57,7 @@ public class XboxApiImpl implements IXboxApi {
       throw new ServiceException("Failed to get user's game list for user: [" + xblUsername + "]. Caused by: " + e);
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -71,7 +71,8 @@ public class XboxApiImpl implements IXboxApi {
       List<XblUserAchievement> result = parser.parse(retriever.retrieve().getBody());
       return result;
     } catch (Exception e) {
-      throw new ServiceException("Failed to get user's game list for user: [" + xblUsername + "]. Caused by: " + e);
+      throw new ServiceException("Failed to get user's game achievement for user: [" + xblUsername + "], gameId: ["
+          + xblGameId + "]. Caused by: " + e);
     }
   }
 

@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.elminster.common.constants.FileExtensionConstants;
 import com.elminster.common.constants.Constants.StringConstants;
 import com.elminster.common.process.ProcessExecutor;
 import com.elminster.common.retrieve.RetrieveException;
@@ -35,6 +36,9 @@ public class BaseRetriever extends CookieInjectRetriever {
 
   /** the system setting. */
   private static SystemSetting systemSetting = SystemSetting.INSTANCE;
+  
+  /** the cookie file. */
+  private static final String COOKIE_FILE = "cookie/" + systemSetting.getMSLiveUsername() + FileExtensionConstants.TEXT_EXTENSION;
 
   /**
    * Constructor.
@@ -54,7 +58,7 @@ public class BaseRetriever extends CookieInjectRetriever {
    * @return check wether the cookie is valid or not.
    */
   private boolean checkCookieValid() {
-    File cookieFile = new File("cookie/jinglei.gu@hotmail.com.txt");
+    File cookieFile = new File(COOKIE_FILE);
     if (cookieFile.exists()) {
       // TODO need to be checked
       long lastApiCalledTime = systemSetting.getLastApiCalledTime();
@@ -132,30 +136,32 @@ public class BaseRetriever extends CookieInjectRetriever {
     systemSetting.updateLastApiCalledTime();
     
     Cookie[] co = null;
-    File cookieFile = new File("cookie/" + systemSetting.getMSLiveUsername() + ".txt");
+    File cookieFile = new File(COOKIE_FILE);
     if (cookieFile.exists()) {
       String cookieInfo = FileUtil.readFile2String(cookieFile.getAbsolutePath());
       if (null != cookieInfo) {
-        String[] cookies = cookieInfo.split("&");
+        String[] cookies = cookieInfo.split(StringConstants.AND);
         co = new Cookie[cookies.length];
         int i = 0;
         for (String cookie : cookies) {
-          String[] split = cookie.split("=");
+          String[] split = cookie.split(StringConstants.EQUAL);
           String cookieKey = split[0];
           String cookieValue = split[1];
-          logger.debug("cookie: " + cookieKey + "=" + cookieValue);
+          if (logger.isDebugEnabled()) {
+            logger.debug("cookie: " + cookieKey + "=" + cookieValue);
+          }
           // update the expiration to 1 day.
-          co[i++] = createCookie(".xbox.com", cookieKey, cookieValue, "/", DateUtil.DAY);
+          co[i++] = createCookie(".xbox.com", cookieKey, cookieValue, StringConstants.SLASH, DateUtil.DAY);
         }
       }
+    } else {
+      throw new IllegalStateException("Cookie file doesn't exist");
     }
     return co;
   }
 
   @Override
   protected void configHttpMethod(HttpMethod httpMethod) throws RetrieveException {
-    // TODO Auto-generated method stub
-    
   }
 
 }
