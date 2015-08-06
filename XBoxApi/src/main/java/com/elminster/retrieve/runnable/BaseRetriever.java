@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -112,7 +113,7 @@ public class BaseRetriever extends CookieInjectRetriever {
       logger.debug("login process returns " + exitValue);
     }
     if (0 != pe.getExitValue()) {
-      throw new LoginFailedException(sb.toString());
+      throw new LoginFailedException("login failed. please check your MS live username and password. login dump: " + sb.toString());
     }
 
   }
@@ -124,13 +125,12 @@ public class BaseRetriever extends CookieInjectRetriever {
    * @throws IOException
    *           on error
    */
-  protected Cookie[] readCookies() throws IOException {
+  protected Cookie[] readCookies() throws Exception {
     if (!checkCookieValid()) {
       try {
         loginIntoLive();
       } catch (URISyntaxException | LoginFailedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        throw e;
       }
     }
     systemSetting.updateLastApiCalledTime();
@@ -161,7 +161,7 @@ public class BaseRetriever extends CookieInjectRetriever {
   }
 
   @Override
-  protected void configHttpMethod(HttpMethod httpMethod) throws RetrieveException {
+  protected void configHttpMethod(HttpClient client, HttpMethod httpMethod) throws RetrieveException {
   }
 
 }
