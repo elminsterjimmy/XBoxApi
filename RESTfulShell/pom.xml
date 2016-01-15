@@ -113,6 +113,35 @@
         </executions>
       </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <versionRange>[1.4,)</versionRange>
+                    <goals>
+                      <goal>run</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   <parent>
     <groupId>com.elminster</groupId>
@@ -135,7 +164,7 @@
     <dependency>
       <groupId>com.elminster</groupId>
       <artifactId>xbox-api</artifactId>
-      <version>${psn.api.version}</version>
+      <version>${xbox.api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -155,9 +184,18 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-log4j</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
   <properties>
-    <psn.api.version>0.0.1-SNAPSHOT</psn.api.version>
+    <xbox.api.version>0.0.1-SNAPSHOT</xbox.api.version>
     <spring.boot.version>1.2.5.RELEASE</spring.boot.version>
   </properties>
 </project>

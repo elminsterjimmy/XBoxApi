@@ -7,12 +7,12 @@ import org.junit.AfterClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.elminster.retrieve.data.user.XblUserAchievement;
-import com.elminster.retrieve.data.user.XblUserGame;
-import com.elminster.retrieve.data.user.XblUserProfile;
-import com.elminster.retrieve.service.IXboxApi;
-import com.elminster.retrieve.service.XboxApiImpl;
-import com.elminster.retrieve.util.SystemSetting;
+import com.elminster.retrieve.xbox.data.user.XblUserAchievement;
+import com.elminster.retrieve.xbox.data.user.XblUserGame;
+import com.elminster.retrieve.xbox.data.user.XblUserProfile;
+import com.elminster.retrieve.xbox.service.IXboxApi;
+import com.elminster.retrieve.xbox.service.XboxApiImpl;
+import com.elminster.retrieve.xbox.util.SystemSetting;
 
 public class XboxApiTest {
   
