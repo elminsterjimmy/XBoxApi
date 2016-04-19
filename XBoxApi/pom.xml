@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>xbox-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -39,44 +40,44 @@
     </resources>
   </build>
   <parent>
-  	<groupId>com.elminster</groupId>
-  	<artifactId>base-pom</artifactId>
-  	<version>1.0.0</version>
+    <groupId>com.elminster</groupId>
+    <artifactId>base-pom</artifactId>
+    <version>1.0.0</version>
   </parent>
   <dependencies>
-  	<dependency>
-  		<groupId>com.elminster</groupId>
-  		<artifactId>commons</artifactId>
-  		<version>1.20.0-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.elminster</groupId>
-  		<artifactId>web-retriever</artifactId>
-  		<version>1.0.0-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>net.sf.json-lib</groupId>
-  		<artifactId>json-lib</artifactId>
-  		<version>2.4</version>
-  		<classifier>jdk15</classifier>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.commons</groupId>
-  		<artifactId>httpclient</artifactId>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.commons</groupId>
-  		<artifactId>codec</artifactId>
-  	</dependency>
-  	<dependency>
-  		<groupId>net.sourceforge.htmlcleaner</groupId>
-  		<artifactId>htmlcleaner</artifactId>
-  	</dependency>
-  	<dependency>
-  		<groupId>mysql</groupId>
-  		<artifactId>mysql-connector-java</artifactId>
-  		<type>jar</type>
-  	</dependency>
+    <dependency>
+      <groupId>com.elminster</groupId>
+      <artifactId>commons</artifactId>
+      <version>1.20.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.elminster</groupId>
+      <artifactId>web-retriever</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>2.4</version>
+      <classifier>jdk15</classifier>
+    </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.htmlcleaner</groupId>
+      <artifactId>htmlcleaner</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <type>jar</type>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
